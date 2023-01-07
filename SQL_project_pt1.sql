@@ -1,8 +1,8 @@
-The first step was to import the JSON files into MS SQL. Some files had more than one layer1 nested elements.
-I used Notepad++ edit the JSON file before running it in JSON viewer. I had to download the JSON Viewer Plugin.
-Using the "replace" option in Notepad++, I added commas after each object (The original file had missing commas,
-which were consequently giving me a JSON parse error). Additionally, I put a square bracket at the start and end of each JSON file.
-I used the following SQL query to import the "business data" JSON file into MS SQL:
+--The first step was to import the JSON files into MS SQL. Some files had more than one layer1 nested elements.
+--I used Notepad++ edit the JSON file before running it in JSON viewer. I had to download the JSON Viewer Plugin.
+--Using the "replace" option in Notepad++, I added commas after each object (The original file had missing commas,
+--which were consequently giving me a JSON parse error). Additionally, I put a square bracket at the start and end of each JSON file.
+--I used the following SQL query to import the "business data" JSON file into MS SQL:
 
 SELECT * FROM OPENROWSET (BULK 'C:\Manjari December Project SQL\yelp_dataset_Database\yelp_academic_dataset_review_transferred.json', Single_CLOB)
 AS import;
