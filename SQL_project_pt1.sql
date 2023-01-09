@@ -685,4 +685,32 @@ AmbienceCategory, Ambcat9val as AmbienceCategoryValue, b.FinalCategory
   TRIM(Ambcat9) <> '') and trim(Ambcat9val) = 'True'
 AND (is_open = '1')
 AND (FinalCategory = 'Food/Ethnic Restaurants' OR FinalCategory = 'Adult Recreation')
-  ) k
+) k
+
+--The following code was used to analyze the top 100 ethnic restaurants, average stars, and price ranges based on the total review count
+
+SELECT TOP (20) b.BusinessName,b.address,b.city,b.state,b.postal_code, b.stars, b.review_count, b.RestaurantsPriceRange2, b.categories, b.FinalCategory, b.Category1,
+GFM_tblcat1,GFM_tblcat1val,GFM_tblcat2,GFM_tblcat2val,GFM_tblcat3,GFM_tblcat3val,GFM_tblcat4,GFM_tblcat4val,GFM_tblcat5,GFM_tblcat5val,GFM_tblcat6,GFM_tblcat6val,
+Ambcat1,Ambcat1val,Ambcat2,Ambcat2val,Ambcat3,Ambcat3val,Ambcat4,Ambcat4val,Ambcat5,Ambcat5val,Ambcat6,Ambcat6val,Ambcat7,Ambcat7val,Ambcat8,Ambcat8val,Ambcat9,Ambcat9val
+  FROM [dbo].[RAWDATA_yelp_academic_dataset_business_operating] b
+  JOIN [dbo].[GoodForMealTable] a
+  on b.business_id = a.business_id
+  JOIN [dbo].[Ambience] ab
+  on a.business_id = ab.business_id
+  WHERE
+  Category1  IN ('Bangladeshi','Chinese','Greek','Haitian','Japanese',
+  'Malaysian','Mongolian','Syrian','Venezuelan','Argentine','British','Cambodian',
+  'Eastern European','Lebanese','Middle Eastern','Puerto Rican','Somali','Thai',
+  'Ukrainian','Egyptian','Georgian','Iberian','Korean','Mediterranean','New Mexican Cuisine',
+  'Nicaraguan','Persian/Iranian','Scandinavian','Singaporean','Southern','Burmese',
+  'Cuban','Dominican','Himalayan/Nepalese','Indian','Laotian','Portuguese',
+  'Russian','Vietnamese','Afghan','Arabic','Brazilian','Colombian','Ethiopian',
+  'Irish','Pakistani','Shanghainese','Belgian','Canadian (New)','Caribbean',
+  'Honduran','Hungarian','Moroccan','Peruvian','Sardinian','Sicilian','Taiwanese',
+  'Uzbek','Filipino','French','German','Latin American','Mexican','Spanish','Tuscan',
+  'Cantonese','Hainan','Hawaiian','Indonesian','Italian','Pan Asian','Polish',
+  'Salvadoran','Senegalese','Sri Lankan','Turkish')
+  AND FinalCategory = 'Food/Ethnic Restaurants'
+  AND is_open = '1'
+  AND RestaurantsPriceRange2 IS NOT NULL
+  ORDER BY cast(review_count AS INT) desc
